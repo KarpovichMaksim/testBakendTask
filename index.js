@@ -7,6 +7,10 @@ const uploadMemory = multer({ storage: memoryStorage });
 
 const app = express();
 
+app.get('/', function(req, res){
+   res.redirect('/upload');
+});
+
 app.get('/upload', uploadMemory.array('file'), (req, res, next) => {
   res.sendFile('form.html', {root: './public/'})
 });
