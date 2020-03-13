@@ -12,10 +12,14 @@ app.get('/', function(req, res){
 });
 
 app.get('/upload', uploadMemory.array('file'), (req, res, next) => {
-  res.sendFile('form.html', {root: './public/'})
+  res.sendFile('index.html', {root: './public/build/'})
 });
 
 app.post('/upload', uploadMemory.array('file'), (req, res, next) => {
+
+  if(req.body.from !== undefined &&  req.body.to !== undefined && req.body.subject !== undefined){
+    res.json({ succeed: false });
+  }
 
 	let files = [];
 
@@ -37,10 +41,10 @@ app.post('/upload', uploadMemory.array('file'), (req, res, next) => {
     });
 
     let mailOptions = {
-        from: req.body.from,
-        to: req.body.to,
-        subject: req.body.subject,
-        text: req.body.text,
+        from: req.body.senderEmail,
+        to: req.body.receiverEmail,
+        subject: "req.body.subject",
+        text: "req.body.text",
         attachments: files
     };
 
